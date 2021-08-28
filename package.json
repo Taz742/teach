@@ -1,0 +1,11 @@
+{
+  "name": "teach",
+  "version": "1.0.0",
+  "description": "some description",
+  "main": "test.js",
+  "scripts": {
+    "go": "node test.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
