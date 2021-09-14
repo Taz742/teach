@@ -3,12 +3,24 @@ import Header from "./header";
 import List from "./list";
 import "./styles.css";
 
+let currentId = 0;
+
 export default class TodoList extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      items: [],
+      items: [
+        {
+          title: "temp title",
+          id: ++currentId,
+        },
+        {
+          title: "temp title 2",
+          id: ++currentId,
+        },
+      ],
+      selectedItems: [],
     };
   }
 
@@ -30,18 +42,37 @@ export default class TodoList extends React.Component {
     this.setState({
       items: newItemsList,
     });
+  };
 
-    console.log("handle delete: ", deleteIndex);
+  handleSelectItem = (id) => {
+    const currentSelectedItems = this.state.selectedItems;
+    const found = currentSelectedItems.find((_id) => _id === id) !== undefined;
+
+    if (found) {
+      this.setState({
+        selectedItems: currentSelectedItems.filter((_id) => _id !== id),
+      });
+    } else {
+      currentSelectedItems.push(id);
+      this.setState({
+        selectedItems: currentSelectedItems,
+      });
+    }
   };
 
   render() {
     const items = this.state;
-    console.log("items: ", items);
+    console.log("items: ", items, this.state.selectedItems);
 
     return (
       <Fragment>
         <Header onAddNewItem={this.handleAddNewItem} />
-        <List items={this.state.items} handleDelete={this.handleDelete} />
+        <List
+          items={this.state.items}
+          selectedItems={this.state.selectedItems}
+          handleDelete={this.handleDelete}
+          handleSelectItem={this.handleSelectItem}
+        />
       </Fragment>
     );
   }

@@ -29,3 +29,28 @@
   border: none;
   cursor: pointer;
 }
+
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+}
+
+.todo-list-item {
+  display: flex;
+  width: 100%;
+  background-color: #f9f9f9;
+  padding: 10px 30px;
+  cursor: pointer;
+}
+
+.todo-list-remove-btn {
+  margin-left: auto;
+}
+
+.todo-list-item-selected {
+  background-color: #888;
+  text-decoration: line-through;
+  color: #fff;
+}
