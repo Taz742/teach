@@ -1,7 +1,7 @@
 import React from "react";
 
 export default class ListItem extends React.Component {
-  handleDelete = () => {
+  handleDelete = (e) => {
     this.props.handleDelete(this.props.id);
   };
 
@@ -15,15 +15,9 @@ export default class ListItem extends React.Component {
       isSelected ? " todo-list-item-selected" : ""
     }`;
 
-    const firstName = "Tazo";
-    const lastName = "Leladze";
-    const fullName = `${firstName} ${lastName}`;
-
-    console.log(className, firstName, lastName, fullName);
-
     return (
       <li className={className} onClick={this.handleSelectItem}>
-        {this.props.text}
+        <span className="todo-list-item-title">{this.props.text}</span>
         <button onClick={this.handleDelete} className="todo-list-remove-btn">
           Delete me
         </button>

@@ -26,17 +26,20 @@ export default class TodoList extends React.Component {
 
   handleAddNewItem = (item) => {
     const items = this.state.items;
-    items.push(item);
+    items.push({
+      title: item,
+      id: ++currentId,
+    });
 
     this.setState({
       items,
     });
   };
 
-  handleDelete = (deleteIndex) => {
+  handleDelete = (id) => {
     const items = this.state.items;
-    const newItemsList = items.filter((item, index) => {
-      return index !== deleteIndex;
+    const newItemsList = items.filter((item) => {
+      return item.id !== id;
     });
 
     this.setState({
