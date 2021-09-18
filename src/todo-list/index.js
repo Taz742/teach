@@ -5,35 +5,51 @@ import "./styles.css";
 
 let currentId = 0;
 
+//react lifecycle component methods
+
 export default class TodoList extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      items: [
-        {
-          title: "temp title",
-          id: ++currentId,
-        },
-        {
-          title: "temp title 2",
-          id: ++currentId,
-        },
-      ],
+      items: [],
       selectedItems: [],
     };
   }
 
-  handleAddNewItem = (item) => {
-    const items = this.state.items;
-    items.push({
-      title: item,
-      id: ++currentId,
-    });
+  componentDidMount() {
+    fetch("http://localhost:3001/todo-items")
+      .then((response) => response.json())
+      .then((response) => {
+        this.setState({
+          items: response,
+        });
+      })
+      .catch((err) => {});
+  }
 
-    this.setState({
-      items,
-    });
+  componentDidUpdate(prevProps, prevState) {
+    console.log("I am updated", prevProps, prevState);
+  }
+
+  componentWillUnmount() {
+    console.log("I am un mounted");
+  }
+
+  handleAddNewItem = (title) => {
+    fetch(`http://localhost:3001/todo-items/create?title=${title}`, {
+      method: "POST",
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        const items = this.state.items;
+        items.push(response);
+
+        this.setState({
+          items,
+        });
+      })
+      .catch((err) => {});
   };
 
   handleDelete = (id) => {
@@ -64,9 +80,6 @@ export default class TodoList extends React.Component {
   };
 
   render() {
-    const items = this.state;
-    console.log("items: ", items, this.state.selectedItems);
-
     return (
       <Fragment>
         <Header onAddNewItem={this.handleAddNewItem} />
